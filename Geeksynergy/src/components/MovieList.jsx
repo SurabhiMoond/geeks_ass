@@ -1,69 +1,67 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 
 export const MovieList = () => {
   const [movies, setMovies] = useState([]);
-  const [newMovie, setNewMovie] = useState({ category: '', language: '', genre: '', sort: '' });
+  useEffect(() => {
+    fetchMovies();
+  }, []);
 
-  const handleChange = (e) => {
-    setNewMovie({ ...newMovie, [e.target.name]: e.target.value });
-  };
-
-  const addData = (e) => {
-    e.preventDefault();
-    // Create a copy of the current movies array and add the new movie to it
-    const updatedMovies = [...movies, { ...newMovie, id: Date.now() }]; // Using Date.now() for a simple unique ID
-    setMovies(updatedMovies); // Update the state with the new array
-    // Clear the form after submission
-    setNewMovie({ category: '', language: '', genre: '', sort: '' });
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch(
+        "https://geeksynergy-backend.onrender.com/api/movieList",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            category: "movies",
+            language: "kannada",
+            genre: "all",
+            sort: "voting",
+          }),
+        }
+      );
+      const data = await response.json();
+      setMovies(data.result);
+      console.log(data.result);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div>
       <h2>Movie List</h2>
-      <form onSubmit={addData}>
-        <div>
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            value={newMovie.category}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="language"
-            placeholder="Language"
-            value={newMovie.language}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="genre"
-            placeholder="Genre"
-            value={newMovie.genre}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="sort"
-            placeholder="Sort"
-            value={newMovie.sort}
-            onChange={handleChange}
-          />
-          <button type="submit">Add Data</button>
-          
-        </div>
-      </form>
-     <div style={{display:'flex',gap:'3%',marginTop:'10%'}}>
-     {movies.map((movie) => (
-        <div key={movie.id} style={{width:'200px',height:'300px' ,border:'1px solid green',textAlign:'center',backgroundColor:'#a7e488',color:'rgb(95, 93, 91)'}}>
-          <h3>Category : {movie.category}</h3>
-          <p>Language : {movie.language}</p>
-          <p>Genre : {movie.genre}</p>
-          <p>SortBy : {movie.sort}</p>
-        </div>
-      ))}
-     </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr ",
+          gap: "3%",
+          margin: "0 0 0 10%",
+          width: "50%",
+          alignItems: "center",
+        }}
+      >
+        {movies.map((movie) => (
+          <div
+            key={movie._id}
+            style={{
+              width: "300px",
+              height: "150px",
+              border: "1px solid green",
+              textAlign: "center",
+              backgroundColor: "#a7e488",
+              color: "rgb(95, 93, 91)",
+            }}
+          >
+            <p>Language : {movie.language}</p>
+            <p>Genre : {movie.genre}</p>
+            {/* <p>SortBy : {movie.sort}</p> */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
