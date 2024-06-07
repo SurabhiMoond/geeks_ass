@@ -1,8 +1,9 @@
 ## Installion:
+```bash
 npm create vite@latest app-name
 npm i axios
 npm i react-router-dom
-
+```
 ## Tech Stack:
 ### HTML
 ### CSS
