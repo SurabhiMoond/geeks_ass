@@ -4,6 +4,27 @@ npm create vite@latest app-name
 npm i axios
 npm i react-router-dom
 ```
+## Folder Structure :
+```
+Geeksynergy
+├── public/
+│   ├── vite.svg
+├── src/
+│   ├── components/
+│   │   ├── Company.jsx
+│   │   ├── Home.jsx
+│   │   └── UserSign.jsx
+│   │   └── UserLogin.jsx
+│   ├── PrivateRoutes/
+│   │   ├── PrivateRoutes.jsx
+│   ├── App.js
+│   ├── index.js
+│   └── ...
+├── README.md
+├── package.json
+└── ...
+
+```
 ## Tech Stack:
 ### HTML
 ### CSS
