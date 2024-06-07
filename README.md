@@ -1,4 +1,4 @@
-##Installion
+## Installion:
 npm create vite@latest app-name
 npm i axios
 npm i react-router-dom
